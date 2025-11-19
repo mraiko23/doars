@@ -2,6 +2,6 @@
   "market": {
     "token": "8505230525:AAGsM3uaFR0VT4OBDWCXA3OVNDmJR-Mv2tk",
     "code": "const myBot = new TelegramBot(botToken, {polling: true}); myBot.on('message', (msg) => { myBot.sendMessage(msg.chat.id, 'Market bot restarted! 🚀'); }); setBotInstance(myBot);",
-    "enabled": false
+    "enabled": true
   }
 }
