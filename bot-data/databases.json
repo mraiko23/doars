@@ -13,5 +13,7 @@
     "bot_status": "stopped"
   },
   "mydb": {},
-  "bots": {}
+  "bots": {
+    "jokebot": "{\"token\":\"7930998190:AAE5qwmnQIBrHXxMXSknSIvo68cejTI4ov0\",\"name\":\"jokebot\",\"status\":\"active\",\"type\":\"jokes\"}"
+  }
 }
