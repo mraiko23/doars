@@ -12,5 +12,6 @@
     "users": "{}",
     "bot_status": "stopped"
   },
-  "mydb": {}
+  "mydb": {},
+  "bots": {}
 }
