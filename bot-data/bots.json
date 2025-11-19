@@ -1,7 +1,1 @@
-{
-  "jokesbot": {
-    "token": "7930998190:AAE5qwmnQIBrHXxMXSknSIvo68cejTI4ov0",
-    "code": "const TelegramBot = require('node-telegram-bot-api');\nconst bot = new TelegramBot('7930998190:AAE5qwmnQIBrHXxMXSknSIvo68cejTI4ov0', {polling: true});\n\nconst jokes = [\n    \"Почему программисты не любят природу? Слишком много багов! 🐛\",\n    \"Что сказал 0 нулю? Ноль без палочки! 😄\",\n    \"Какой любимый напиток у программиста? Кофеин! ☕\",\n    \"Почему скелет не программирует? Нет мозгов! 💀\",\n    \"Что делает JavaScript на диете? Сбрасывает колбэки! 📉\"\n];\n\nbot.onText(/\\/joke|\\/шутка/i, (msg) => {\n    const chatId = msg.chat.id;\n    const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];\n    bot.sendMessage(chatId, `😂 ${randomJoke}`);\n});\n\nbot.on('message', (msg) => {\n    const chatId = msg.chat.id;\n    if (!msg.text || !/\\/joke|\\/шутка/i.test(msg.text)) {\n        bot.sendMessage(chatId, 'Напиши /joke или /шутка для порции смеха! 😜');\n    }\n});\n\nconsole.log('JokesBot запущен! 🎉');",
-    "enabled": true
-  }
-}
+{}
