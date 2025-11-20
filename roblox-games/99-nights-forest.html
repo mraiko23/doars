@@ -1,0 +1,80 @@
+<!DOCTYPE html>  
+<html lang="ru">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>99 Nights in the Forest - Гайд по Roblox игре</title>  
+  <style>  
+    body {  
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);  
+      color: #e0e0e0; font-family: 'Courier New', monospace; margin: 0; padding: 20px;  
+      background-image: radial-gradient(circle, rgba(0,255,0,0.05) 1px, transparent 1px);  
+      background-size: 50px 50px;  
+    }  
+    .container { max-width: 1200px; margin: 0 auto; }  
+    h1 { text-align: center; color: #00ff00; text-shadow: 0 0 10px #00ff00; font-size: 3em; }  
+    .section { background: rgba(0,0,0,0.7); padding: 20px; margin: 20px 0; border-radius: 10px; border: 1px solid #00ff00; }  
+    .night { display: inline-block; width: 100px; height: 100px; background: #ff4444; color: white; margin: 10px; border-radius: 50%; text-align: center; line-height: 100px; cursor: pointer; transition: all 0.3s; }  
+    .night:hover { background: #00ff00; transform: scale(1.1); box-shadow: 0 0 20px #00ff00; }  
+    .tips { list-style: none; padding: 0; } .tips li { background: #333; margin: 10px 0; padding: 15px; border-left: 5px solid #00ff00; }  
+    footer { text-align: center; font-size: 0.8em; opacity: 0.7; margin-top: 40px; }  
+  </style>  
+</head>  
+<body>  
+  <div class="container">  
+    <h1>🌲 99 Nights in the Forest 🌑</h1>  
+    <p style="text-align: center; font-size: 1.2em;">Roblox Survival Horror: Выживи 99 ночей в проклятом лесу! (ID: 17109926179)</p>  
+
+    <div class="section">  
+      <h2>📖 Описание</h2>  
+      <p>Застрял в лесу с монстрами (The Rake, медведи, призраки). Днём строй базу, ночью прячься/дерйся. Цель: <strong>99 ночей → Победа!</strong></p>  
+      <p>Автор: @TheRakeRemastered. 1M+ визитов. Мультиплеер до 8 игроков.</p>  
+    </div>  
+
+    <div class="section">  
+      <h2>🎮 Геймплей</h2>  
+      <ul>  
+        <li><strong>День:</strong> Руби дерево (доски), камень (оружие), крафти еду/воду.</li>  
+        <li><strong>Ночь:</strong> Монстры! Фонарик, ловушки, стреляй/беги.</li>  
+        <li>Команды: <code>/night</code> (пропуск), badges за каждую ночь.</li>  
+      </ul>  
+    </div>  
+
+    <div class="section">  
+      <h2>🌙 Прогресс по ночам</h2>  
+      <div id="nights"></div>  
+      <script>  
+        for(let i=1; i<=99; i++){  
+          document.getElementById('nights').innerHTML += `<div class="night" onclick="nightInfo(${i})">${i}</div>`;  
+        }  
+        function nightInfo(n){  
+          let diff = '';  
+          if(n<=10) diff='Легко: строй base';  
+          else if(n<=50) diff='Средне: gun + ловушки';  
+          else diff='Хард: кооп или умри 😱';  
+          alert(`Ночь ${n}: ${diff}`);  
+        }  
+      </script>  
+    </div>  
+
+    <div class="section">  
+      <h2>💡 Топ-стратегии</h2>  
+      <ul class="tips">  
+        <li>Строить у реки (ресурсы ближе).</li>  
+        <li>Крафти пистолет ASAP (после 5 досок + металл).</li>  
+        <li>Играй с друзьями — монстры слабее в группе.</li>  
+        <li>Звуки: Шаги = беги, крики = стреляй!</li>  
+        <li>Badges: Night 99 = легендарный скин.</li>  
+      </ul>  
+    </div>  
+
+    <div class="section">  
+      <h2>🔗 Ссылки</h2>  
+      <p><a href="https://www.roblox.com/games/17109926179/99-Nights-In-The-Forest" target="_blank" style="color: #00ff00;">Играть на Roblox</a> |  
+      <a href="https://www.youtube.com/results?search_query=roblox+99+nights+in+the+forest" target="_blank" style="color: #00ff00;">Геймплей видео</a></p>  
+    </div>  
+  </div>  
+
+  <footer>SHERLOCK AI Test Site 🚀 | Обновлено: ${new Date().toLocaleString('ru')}</footer>  
+</body>  
+</html>
