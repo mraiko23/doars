@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кликер Симулятор - Тест</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; margin: 0; padding: 20px; min-height: 100vh; }
+    #clickBtn { width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, #ff6b6b, #feca57); border: none; font-size: 24px; font-weight: bold; cursor: pointer; margin: 20px; transition: transform 0.1s, box-shadow 0.1s; }
+    #clickBtn:active { transform: scale(0.95); box-shadow: 0 0 20px rgba(255,255,255,0.5); }
+    #score { font-size: 48px; margin: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+    #multiplier { font-size: 24px; margin: 10px; }
+    .upgrade { background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; margin: 10px; border-radius: 10px; cursor: pointer; transition: background 0.3s; }
+    .upgrade:hover { background: rgba(255,255,255,0.4); }
+    .upgrade:disabled { opacity: 0.5; cursor: not-allowed; }
+    #saveStatus { margin: 10px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>🖱️ Кликер Симулятор - Тест версия! 🔥</h1>
+  <div id="score">Очки: 0</div>
+  <div id="multiplier">Множитель: 1x</div>
+  <button id="clickBtn">КЛИК!</button>
+  
+  <div>
+    <button class="upgrade" id="upgrade1">Автокликер x2 (стоимость: 10)</button>
+    <button class="upgrade" id="upgrade2">Множитель x2 (стоимость: 50)</button>
+    <button class="upgrade" id="upgrade3">Супер-клик x5 (стоимость: 200)</button>
+  </div>
+  
+  <div id="saveStatus"></div>
+
+  <script>
+    let score = parseInt(localStorage.getItem('clickerScore')) || 0;
+    let multiplier = parseInt(localStorage.getItem('clickerMultiplier')) || 1;
+    let autoClicker = parseInt(localStorage.getItem('autoClicker')) || 0;
+    let superClick = parseInt(localStorage.getItem('superClick')) || 0;
+
+    const scoreEl = document.getElementById('score');
+    const multiplierEl = document.getElementById('multiplier');
+    const saveStatus = document.getElementById('saveStatus');
+
+    function updateDisplay() {
+      scoreEl.textContent = 'Очки: ' + score;
+      multiplierEl.textContent = 'Множитель: ' + multiplier + 'x (Авто: ' + autoClicker + ', Супер: ' + superClick + ')';
+      localStorage.setItem('clickerScore', score);
+      localStorage.setItem('clickerMultiplier', multiplier);
+      localStorage.setItem('autoClicker', autoClicker);
+      localStorage.setItem('superClick', superClick);
+      saveStatus.textContent = '💾 Сохранено!';
+      setTimeout(() => { saveStatus.textContent = ''; }, 2000);
+    }
+
+    document.getElementById('clickBtn').addEventListener('click', () => {
+      score += (1 * multiplier + superClick);
+      updateDisplay();
+    });
+
+    document.getElementById('upgrade1').addEventListener('click', () => {
+      if (score >= 10) {
+        score -= 10;
+        autoClicker++;
+        setInterval(() => { score += autoClicker * multiplier; updateDisplay(); }, 1000);
+        updateDisplay();
+      }
+    });
+
+    document.getElementById('upgrade2').addEventListener('click', () => {
+      if (score >= 50) {
+        score -= 50;
+        multiplier *= 2;
+        updateDisplay();
+      }
+    });
+
+    document.getElementById('upgrade3').addEventListener('click', () => {
+      if (score >= 200) {
+        score -= 200;
+        superClick += 5;
+        updateDisplay();
+      }
+    });
+
+    // Восстанавливаем автокликеры
+    if (autoClicker > 0) {
+      setInterval(() => { score += autoClicker * multiplier; updateDisplay(); }, 1000);
+    }
+
+    // Инициализация
+    updateDisplay();
+  </script>
+</body>
+</html>
