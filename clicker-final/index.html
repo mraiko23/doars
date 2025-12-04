@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🐹 Кликер-Симулятор (Исправлено)</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            text-align: center; 
+            background: #f0f0f0; 
+            margin: 0;
+            padding: 20px;
+        }
+        #points { 
+            font-size: 28px; 
+            margin: 20px; 
+            color: #333;
+            font-weight: bold;
+        }
+        #clickButton { 
+            width: 180px; 
+            height: 180px; 
+            background: linear-gradient(135deg, #ff9900, #ff6600); 
+            border-radius: 50%; 
+            color: white; 
+            font-size: 22px; 
+            cursor: pointer; 
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+            margin: 20px;
+        }
+        #clickButton:active {
+            transform: scale(0.95);
+        }
+        .upgrade {
+            margin: 15px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .upgrade button {
+            padding: 8px 15px;
+            margin-left: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upgrade button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        h1 {
+            color: #ff6600;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐹 Кликер-Симулятор</h1>
+    <div id="points">Очки: 0</div>
+    <button id="clickButton">КЛИКНУТЬ!</button>
+    <h2>Улучшения</h2>
+    <div class="upgrade">
+        <span>Удвоить очки за клик (100 очков)</span>
+        <button onclick="buyUpgrade('doubleClick', 100)" id="btnDoubleClick" disabled>Купить</button>
+    </div>
+    <div class="upgrade">
+        <span>Автокликер (1 очко/секунду, 500 очков)</span>
+        <button onclick="buyUpgrade('autoClicker', 500)" id="btnAuto" disabled>Купить</button>
+    </div>
+
+    <script>
+        // === ИНИЦИАЛИЗАЦИЯ ===
+        let points = 0;
+        const upgrades = {
+            doubleClick: { owned: false, cost: 100 },
+            autoClicker: { owned: false, cost: 500, interval: null }
+        };
+
+        // === ОБРАБОТЧИК КЛИКА (через addEventListener) ===
+        document.getElementById('clickButton').addEventListener('click', function() {
+            console.log("[ДЕБАГ] Кнопка нажата!");
+            points += upgrades.doubleClick.owned ? 2 : 1;
+            console.log("[ДЕБАГ] Текущие очки:", points);
+            updateDisplay();
+        });
+
+        // === ПОКУПКА УЛУЧШЕНИЙ ===
+        function buyUpgrade(type, cost) {
+            if (points >= cost) {
+                points -= cost;
+                upgrades[type].owned = true;
+                if (type === 'autoClicker') startAutoClicker();
+                document.getElementById('btnDoubleClick').disabled = false;
+                document.getElementById('btnAuto').disabled = false;
+                updateDisplay();
+            }
+        }
+
+        // === АВТОКЛИКЕР ===
+        function startAutoClicker() {
+            if (upgrades.autoClicker.interval) return;
+            upgrades.autoClicker.interval = setInterval(() => {
+                points += 1;
+                updateDisplay();
+            }, 1000);
+        }
+
+        // === ОБНОВЛЕНИЕ ОТОБРАЖЕНИЯ ===
+        function updateDisplay() {
+            document.getElementById('points').textContent = 'Очки: ' + points;
+        }
+
+        // === ЗАГРУЗКА ДАННЫХ ИЗ localStorage ===
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('clickerGame');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                points = data.points;
+                upgrades.doubleClick.owned = data.doubleClick;
+                upgrades.autoClicker.owned = data.autoClicker;
+                if (upgrades.doubleClick.owned) document.getElementById('btnDoubleClick').disabled = false;
+                if (upgrades.autoClicker.owned) {
+                    document.getElementById('btnAuto').disabled = false;
+                    startAutoClicker();
+                }
+                updateDisplay();
+            }
+        });
+
+        // === СОХРАНЕНИЕ ДАННЫХ ===
+        window.addEventListener('beforeunload', () => {
+            const data = {
+                points: points,
+                doubleClick: upgrades.doubleClick.owned,
+                autoClicker: upgrades.autoClicker.owned
+            };
+            localStorage.setItem('clickerGame', JSON.stringify(data));
+        });
+    </script>
+</body>
+</html>
